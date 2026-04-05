@@ -2,7 +2,7 @@
 
 Pluck words out of anything on your screen — subtitles, articles, images, PDFs — translate them instantly, and build a personal vocabulary that reviews itself.
 
-Built for the hackathon theme: **"Give people time back in their day using AI."**
+Built for the Ramp emerging talent virtual hackathon, with theme: **"Give people time back in their day using AI."**
 
 Instead of manually looking up words and copying them into flashcard apps, Pluck captures vocabulary passively as you encounter it. A 5-minute daily quiz is all you need.
 
@@ -25,8 +25,6 @@ Instead of manually looking up words and copying them into flashcard apps, Pluck
 - Python 3.11+
 - Node.js 18+
 - Accessibility permissions for the terminal/IDE running the app
-- A [DeepL API](https://www.deepl.com/pro-api) free key
-
 ---
 
 ## Installation
@@ -46,17 +44,17 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+No API key needed — translation runs via Google Translate's free backend through the `deep-translator` library.
+
 ### 3. Configure
 
-Create a `config.py` or set the following values in the existing one:
+Optionally edit `config.py` to change the hotkey or target language:
 
 ```python
-DEEPL_API_KEY = "your-deepl-api-key"   # free tier works fine
 HOTKEY_MODIFIERS = {"cmd", "shift"}
 HOTKEY_KEY = "'"
+TARGET_LANGUAGE = "en"
 ```
-
-Get a free DeepL API key at [deepl.com/pro-api](https://www.deepl.com/pro-api) (500,000 characters/month free).
 
 ### 4. Grant Accessibility permission
 
@@ -119,13 +117,3 @@ pluck-translator/
 ## Quiz system
 
 Words appear in typed flashcard quizzes — you type the translation from memory. A word **graduates** after 3 correct answers and stops appearing in future quizzes. The progress is shown as dots on the word list.
-
----
-
-## Deploying the webapp to Vercel
-
-The webapp is built on Next.js and deploys to Vercel with one change: swap the local SQLite database for a hosted Postgres instance (e.g. [Neon](https://neon.tech)).
-
-1. Create a Neon project and run the schema from `database.py`
-2. Link it via the Vercel integration (auto-injects `DATABASE_URL`)
-3. `lib/db.ts` already has the env-aware factory — it uses `@vercel/postgres` when `DATABASE_URL` is present and falls back to `better-sqlite3` locally
