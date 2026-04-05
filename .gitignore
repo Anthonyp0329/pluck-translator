@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Database (local only)
+translations.db
+
+# macOS
+.DS_Store
+
+# Next.js
+translate-webapp/.next/
+translate-webapp/node_modules/
+translate-webapp/.env.local
